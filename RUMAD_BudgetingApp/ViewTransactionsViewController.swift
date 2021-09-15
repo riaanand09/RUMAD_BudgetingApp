@@ -17,11 +17,11 @@ class ViewTransactionsViewController: UIViewController, UITableViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view.
         transactionTableView.delegate = self
         transactionTableView.dataSource = self
-        currentBalanceTextView.text = "\(balance)"
+        currentBalanceTextView.text = "$\(String(format: "%.2f", balance))"
         self.disableDeleteTransactionButton()
-        // Do any additional setup after loading the view.
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -34,19 +34,19 @@ class ViewTransactionsViewController: UIViewController, UITableViewDataSource, U
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy"
-        var transactionDate = allTransactions[indexPath.row].date
-        var transactionDateString = dateFormatter.string(from: transactionDate)
-        var transactionCategory = allTransactions[indexPath.row].category
-        var transactionAmount = allTransactions[indexPath.row].amount
+        let transactionDate = allTransactions[indexPath.row].date
+        let transactionDateString = dateFormatter.string(from: transactionDate)
+        let transactionCategory = allTransactions[indexPath.row].category
+        let transactionAmount = allTransactions[indexPath.row].amount
         
-        if allTransactions[indexPath.row].isPositive {
+        if transactionCategory.isPositive {
             
-            cell.textLabel!.text = "+ $\(transactionAmount) on \(transactionDateString)"
+            cell.textLabel!.text = "+ $\(String(format: "%.2f", transactionAmount)) on \(transactionDateString)"
             
         }
         else{
             
-            cell.textLabel!.text = "- $\(transactionAmount) towards '\(transactionCategory)' on \(transactionDateString)"
+            cell.textLabel!.text = "- $\(String(format: "%.2f", transactionAmount)) towards '\(transactionCategory.categoryName)' on \(transactionDateString)"
         }
         
         return cell
@@ -65,14 +65,14 @@ class ViewTransactionsViewController: UIViewController, UITableViewDataSource, U
 
         alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (action: UIAlertAction!) in
             
-            if allTransactions[self.selectedCellIndex].isPositive {
+            if allTransactions[self.selectedCellIndex].category.isPositive {
                 balance = balance - allTransactions[self.selectedCellIndex].amount
             }
             else{
                 balance = balance + allTransactions[self.selectedCellIndex].amount
             }
             
-            self.currentBalanceTextView.text = "\(balance)"
+            self.currentBalanceTextView.text = "$\(String(format: "%.2f", balance))"
             
             allTransactions.remove(at: self.selectedCellIndex)
             self.disableDeleteTransactionButton()

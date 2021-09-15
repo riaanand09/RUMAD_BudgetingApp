@@ -23,11 +23,9 @@ class AddTransactionViewController: UIViewController, UIPickerViewDataSource, UI
         datePicker.maximumDate = Date()
     }
     
-    let categories = ["Housing (-)", "Transportation (-)", "Food (-)", "Utilities (-)", "Insurance (-)", "Medical (-)", "Saving/Investing (-)", "Personal Spending (-)", "Other (-)", "Salary (+)", "Other (+)"]
-    
-    var selectedCategory = ""
+    var selectedCategory = Category()
     var selectedDate = Date()
-    var enteredAmount = 0.0
+    var enteredAmount = 0.00
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -38,7 +36,13 @@ class AddTransactionViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categories[row]
+        
+        if categories[row].isPositive{
+            return "\(categories[row].categoryName) (+)"
+        }
+        else{
+            return "\(categories[row].categoryName) (-)"
+        }
     }
     
     // Capture the picker view selection
@@ -65,14 +69,13 @@ class AddTransactionViewController: UIViewController, UIPickerViewDataSource, UI
             newTransaction.amount = self.enteredAmount
             newTransaction.date = self.selectedDate
             newTransaction.category = self.selectedCategory
+            allTransactions.append(newTransaction)
             
-            if selectedCategory == "Salary (+)" || selectedCategory == "Other (+)" {
-                
-                newTransaction.isPositive = true
-                allTransactions.append(newTransaction)
+            if selectedCategory.isPositive {
+            
                 balance = balance + enteredAmount
                 
-                let alert = UIAlertController(title: "Transaction added successfully", message: "+ $\(enteredAmount) on \(dateFormatter.string(from: selectedDate)). Balance is now \(balance)", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Transaction added successfully", message: "+ $\(String(format: "%.2f", enteredAmount)) on \(dateFormatter.string(from: selectedDate)). Balance is now $\(String(format: "%.2f", balance))", preferredStyle: .alert)
                 
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 
@@ -84,19 +87,61 @@ class AddTransactionViewController: UIViewController, UIPickerViewDataSource, UI
             }
             else{
                 
-                newTransaction.isPositive = false
-                allTransactions.append(newTransaction)
                 balance = balance - enteredAmount
                 
-                let alert = UIAlertController(title: "Transaction added successfully", message: "- $\(enteredAmount) towards '\(selectedCategory)' on \(dateFormatter.string(from: selectedDate)). Balance is now \(balance)", preferredStyle: .alert)
+                if allBudgets[selectedCategory.categoryName] == nil {
+                    
+                    let alert = UIAlertController(title: "Transaction added successfully", message: "- $\(String(format: "%.2f", enteredAmount)) towards '\(selectedCategory.categoryName)' on \(dateFormatter.string(from: selectedDate)). Balance is now $\(String(format: "%.2f", balance))", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
                 
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
+                else {
+                    
+                    let budgetStartDate = allBudgets[selectedCategory.categoryName]!.startDate
+                    
+                    let spendingLimit = allBudgets[selectedCategory.categoryName]!.spendingLimit
+                    
+                    let prevMoneySpent = allBudgets[selectedCategory.categoryName]!.moneySpent
+                    
+                    let currentMoneySpent = prevMoneySpent + enteredAmount
+                    
+                    allBudgets[selectedCategory.categoryName]!.moneySpent = currentMoneySpent
+                    
+                    if currentMoneySpent >= spendingLimit {
+                        
+                        alerts.append("Oops! Your budget of $\(String(format: "%.2f", spendingLimit)) on '\(selectedCategory.categoryName)' has been surpassed.")
+                        
+                        allBudgets.removeValue(forKey: selectedCategory.categoryName)
+                        
+                        let alert = UIAlertController(title: "Transaction added successfully, but budget surpassed!", message: "You have surpassed your budget of $\(String(format: "%.2f", spendingLimit)) on '\(selectedCategory.categoryName)'. The budget for this category has been cleared; set a new one through the 'add budget' page.", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+                    else if currentMoneySpent >= spendingLimit*(0.75){
+                        
+                        alerts.append("Warning: budget of $\(String(format: "%.2f", spendingLimit)) on '\(selectedCategory.categoryName)' is over 75% spent!")
+                        
+                        let alert = UIAlertController(title: "Transaction added successfully, but budget at least 75% surpassed!", message: "You have spent $\(currentMoneySpent) on '\(selectedCategory.categoryName)' since \(dateFormatter.string(from: budgetStartDate)). This amount is at least 75% of your budget of $\(String(format: "%.2f", spendingLimit))", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        //performSegue(withIdentifier: "sendInfo", sender: self)
+                        
+                    }
+                    
+                }
                 
             }
             
-            //performSegue(withIdentifier: "sendInfo", sender: self)
         }
         else{
 
@@ -109,16 +154,16 @@ class AddTransactionViewController: UIViewController, UIPickerViewDataSource, UI
         }
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//        if segue.identifier == "sendInfo"{
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if segue.identifier == "sendInfo"{
             
 //            vc.transactionDateString = self.selectedDateString
 //            vc.transactionCategory = self.selectedCategoryString
 //            vc.transactionAmount = self.amount
             
-//        }
+        }
         
-//    }
+    }
 
 }
