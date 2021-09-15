@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9B5455D926BB34860069BC23 /* CreateBudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5455D826BB34860069BC23 /* CreateBudgetViewController.swift */; };
 		9B5455E026BB34B50069BC23 /* ViewTransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5455DF26BB34B50069BC23 /* ViewTransactionsViewController.swift */; };
-		9B5455E326BB34CA0069BC23 /* ViewTrendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5455E226BB34CA0069BC23 /* ViewTrendsViewController.swift */; };
 		9B5455EA26BB35150069BC23 /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5455E926BB35150069BC23 /* AddTransactionViewController.swift */; };
 		9B5455ED26BB352B0069BC23 /* MyAlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5455EC26BB352B0069BC23 /* MyAlertsViewController.swift */; };
 		9BCA8B6826A6388C00E96DC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCA8B6726A6388C00E96DC9 /* AppDelegate.swift */; };
@@ -26,7 +25,6 @@
 /* Begin PBXFileReference section */
 		9B5455D826BB34860069BC23 /* CreateBudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBudgetViewController.swift; sourceTree = "<group>"; };
 		9B5455DF26BB34B50069BC23 /* ViewTransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransactionsViewController.swift; sourceTree = "<group>"; };
-		9B5455E226BB34CA0069BC23 /* ViewTrendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTrendsViewController.swift; sourceTree = "<group>"; };
 		9B5455E926BB35150069BC23 /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
 		9B5455EC26BB352B0069BC23 /* MyAlertsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlertsViewController.swift; sourceTree = "<group>"; };
 		9BCA8B6426A6388C00E96DC9 /* RUMAD_BudgetingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RUMAD_BudgetingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,7 +80,6 @@
 				9B5455E926BB35150069BC23 /* AddTransactionViewController.swift */,
 				9B5455DF26BB34B50069BC23 /* ViewTransactionsViewController.swift */,
 				9B5455EC26BB352B0069BC23 /* MyAlertsViewController.swift */,
-				9B5455E226BB34CA0069BC23 /* ViewTrendsViewController.swift */,
 				9BCA8B7026A6388F00E96DC9 /* Assets.xcassets */,
 				9BCA8B7226A6388F00E96DC9 /* LaunchScreen.storyboard */,
 				9BD4ABD226DC342200BE2BC0 /* GoogleService-Info.plist */,
@@ -164,7 +161,6 @@
 			files = (
 				9BD4ABCB26D02F7200BE2BC0 /* ViewBudgetsViewController.swift in Sources */,
 				9B5455D926BB34860069BC23 /* CreateBudgetViewController.swift in Sources */,
-				9B5455E326BB34CA0069BC23 /* ViewTrendsViewController.swift in Sources */,
 				9B5455ED26BB352B0069BC23 /* MyAlertsViewController.swift in Sources */,
 				9B5455EA26BB35150069BC23 /* AddTransactionViewController.swift in Sources */,
 				9BCA8B6C26A6388C00E96DC9 /* LoginViewController.swift in Sources */,

@@ -10,6 +10,9 @@ import UIKit
 class MyAlertsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var myAlertsTableView: UITableView!
+    @IBOutlet weak var alertDetailsTextView: UITextView!
+    
+    var selectedCellIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,15 @@ class MyAlertsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView,
+             didSelectRowAt indexPath: IndexPath) {
+        
+        selectedCellIndex = indexPath.row
+        var currentAlert = alerts[selectedCellIndex]
+        
+        alertDetailsTextView?.text = "\(currentAlert)"
     }
 
 }

@@ -11,7 +11,7 @@ class ViewBudgetsViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBOutlet weak var budgetTableView: UITableView!
     @IBOutlet weak var deleteBudgetButton: UIButton!
-    @IBOutlet weak var moneySpentTextField: UITextField!
+    @IBOutlet weak var moneySpentTextView: UITextView!
     
     var selectedCellIndex = 0
     
@@ -56,7 +56,7 @@ class ViewBudgetsViewController: UIViewController, UITableViewDataSource, UITabl
         var currentCategory = budgetCategories[indexPath.row]
         var moneySpent = allBudgets[currentCategory]!.moneySpent
         
-        moneySpentTextField.text = "You have spent $\(String(format: "%.2f", moneySpent)) towards '\(currentCategory)' so far"
+        moneySpentTextView.text = "You have spent $\(String(format: "%.2f", moneySpent)) towards '\(currentCategory)' so far"
     }
     
     @IBAction func didTapDeleteBudgetButton(_ sender: Any) {
@@ -69,7 +69,7 @@ class ViewBudgetsViewController: UIViewController, UITableViewDataSource, UITabl
             allBudgets.removeValue(forKey: currentCategory)
             self.budgetCategories.remove(at: self.selectedCellIndex)
             self.disableDeleteBudgetButton()
-            self.moneySpentTextField.text = ""
+            self.moneySpentTextView.text = ""
             self.budgetTableView.reloadData()
         }))
 
